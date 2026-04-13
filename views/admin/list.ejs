@@ -1,0 +1,54 @@
+<%- include('../partials-head') %>
+<div class="container">
+  <header class="hero admin-hero">
+    <div>
+      <p class="eyebrow">Адмін-панель</p>
+      <h1>Збережені брифи</h1>
+      <p class="subtitle">Увійшли як <strong><%= adminUsername %></strong></p>
+    </div>
+    <form method="POST" action="/admin/logout">
+      <button class="secondary-btn" type="submit">Вийти</button>
+    </form>
+  </header>
+
+  <% if (!briefs.length) { %>
+    <div class="card empty-state">
+      <h2>Поки що записів немає</h2>
+      <p>Після відправлення форми вони з’являться тут.</p>
+    </div>
+  <% } else { %>
+    <div class="table-wrapper card">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Команда / компанія</th>
+          <th>Контакт</th>
+          <th>Email</th>
+          <th>Створено</th>
+          <th>Дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% briefs.forEach(brief => { %>
+          <tr>
+            <td><%= brief.id %></td>
+            <td><%= brief.company_name %></td>
+            <td><%= brief.contact_person %></td>
+            <td><%= brief.email %></td>
+            <td><%= new Date(brief.created_at).toLocaleString('uk-UA') %></td>
+            <td class="actions-cell">
+              <a class="mini-btn" href="/admin/briefs/<%= brief.id %>">Переглянути</a>
+              <a class="mini-btn outline" href="/admin/briefs/<%= brief.id %>/edit">Редагувати</a>
+              <form method="POST" action="/admin/briefs/<%= brief.id %>/delete" onsubmit="return confirm('Видалити цей бриф?');">
+                <button class="mini-btn danger" type="submit">Видалити</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials-footer') %>

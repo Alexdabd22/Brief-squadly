@@ -1,0 +1,23 @@
+<%- include('../partials-head') %>
+<div class="container small-container">
+  <div class="card auth-card">
+    <h1>Вхід в адмін-панель</h1>
+    <p class="subtitle">Увійдіть для перегляду і редагування збережених брифів.</p>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/admin/login" class="stacked-form">
+      <label>Логін
+        <input type="text" name="username" required />
+      </label>
+      <label>Пароль
+        <input type="password" name="password" required />
+      </label>
+      <button class="primary-btn" type="submit">Увійти</button>
+      <a class="secondary-link" href="/">Повернутися до форми</a>
+    </form>
+  </div>
+</div>
+<%- include('../partials-footer') %>

@@ -1,0 +1,138 @@
+<%- include('../partials-head') %>
+<div class="container">
+  <header class="hero admin-hero">
+    <div>
+      <p class="eyebrow">Редагування брифу</p>
+      <h1>ID <%= brief.id %> — <%= brief.company_name %></h1>
+    </div>
+    <a class="secondary-btn" href="/admin/briefs/<%= brief.id %>">Скасувати</a>
+  </header>
+
+  <% if (error) { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+
+  <form class="card form-grid" method="POST" action="/admin/briefs/<%= brief.id %>/edit">
+    <section>
+      <h2>Контактна інформація</h2>
+      <div class="grid-2">
+        <label>Ім’я та прізвище *
+          <input type="text" name="contact_person" value="<%= brief.contact_person %>" required />
+        </label>
+        <label>Email *
+          <input type="email" name="email" value="<%= brief.email %>" required />
+        </label>
+        <label>Телефон
+          <input type="text" name="phone" value="<%= brief.phone || '' %>" />
+        </label>
+        <label>Зручний спосіб зв’язку
+          <input type="text" name="preferred_contact" value="<%= brief.preferred_contact || '' %>" />
+        </label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Замовник та проєкт</h2>
+      <div class="grid-2">
+        <label>Назва компанії / команди *
+          <input type="text" name="company_name" value="<%= brief.company_name %>" required />
+        </label>
+        <label>Тип організації *
+          <input type="text" name="organization_type" value="<%= brief.organization_type %>" required />
+        </label>
+      </div>
+      <label>Діяльність компанії / команди *
+        <textarea name="company_activity" required><%= brief.company_activity %></textarea>
+      </label>
+      <label>Опис запиту *
+        <textarea name="project_summary" required><%= brief.project_summary %></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>Цілі та структура</h2>
+      <label>Проблема, яку потрібно вирішити *
+        <textarea name="problem_statement" required><%= brief.problem_statement %></textarea>
+      </label>
+      <label>Мета проєкту *
+        <textarea name="project_goal" required><%= brief.project_goal %></textarea>
+      </label>
+      <div class="grid-2">
+        <label>Цільова аудиторія *
+          <textarea name="target_audience" required><%= brief.target_audience %></textarea>
+        </label>
+        <label>Очікувана кількість користувачів *
+          <input type="text" name="expected_users" value="<%= brief.expected_users %>" required />
+        </label>
+      </div>
+      <label>Критерії успіху *
+        <textarea name="success_criteria" required><%= brief.success_criteria %></textarea>
+      </label>
+      <label>Основні модулі *
+        <textarea name="platform_modules" required><%= brief.platform_modules %></textarea>
+      </label>
+      <label>Дані та сутності *
+        <textarea name="content_entities" required><%= brief.content_entities %></textarea>
+      </label>
+      <label>Доступи / ролі / кабінети
+        <textarea name="access_notes"><%= brief.access_notes || '' %></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>Функціональність та дизайн</h2>
+      <label>Потрібні функції *
+        <textarea name="required_features" required><%= brief.required_features %></textarea>
+      </label>
+      <label>Ролі користувачів *
+        <textarea name="user_roles" required><%= brief.user_roles %></textarea>
+      </label>
+      <label>Інтеграції
+        <input type="text" name="integrations" value="<%= brief.integrations || '' %>" />
+      </label>
+      <label>Нестандартна логіка
+        <textarea name="custom_logic"><%= brief.custom_logic || '' %></textarea>
+      </label>
+      <label>Побажання до дизайну
+        <textarea name="design_preferences"><%= brief.design_preferences || '' %></textarea>
+      </label>
+      <div class="grid-2">
+        <label>Референси
+          <textarea name="reference_examples"><%= brief.reference_examples || '' %></textarea>
+        </label>
+        <label>Бренд-матеріали
+          <textarea name="brand_assets"><%= brief.brand_assets || '' %></textarea>
+        </label>
+      </div>
+      <label>Мобільна версія
+        <input type="text" name="mobile_priority" value="<%= brief.mobile_priority || '' %>" />
+      </label>
+    </section>
+
+    <section>
+      <h2>Обмеження та коментарі</h2>
+      <div class="grid-2">
+        <label>Дедлайн
+          <input type="text" name="deadline" value="<%= brief.deadline || '' %>" />
+        </label>
+        <label>Бюджет
+          <input type="text" name="budget_range" value="<%= brief.budget_range || '' %>" />
+        </label>
+      </div>
+      <label>Технічні обмеження
+        <textarea name="technical_constraints"><%= brief.technical_constraints || '' %></textarea>
+      </label>
+      <label>Хто приймає рішення
+        <input type="text" name="decision_maker" value="<%= brief.decision_maker || '' %>" />
+      </label>
+      <label>Додаткові коментарі
+        <textarea name="additional_notes"><%= brief.additional_notes || '' %></textarea>
+      </label>
+    </section>
+
+    <div class="form-actions">
+      <button class="primary-btn" type="submit">Зберегти зміни</button>
+    </div>
+  </form>
+</div>
+<%- include('../partials-footer') %>

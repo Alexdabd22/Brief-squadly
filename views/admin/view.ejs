@@ -1,0 +1,47 @@
+<%- include('../partials-head') %>
+<div class="container">
+  <header class="hero admin-hero">
+    <div>
+      <p class="eyebrow">Перегляд брифу</p>
+      <h1><%= brief.company_name %></h1>
+      <p class="subtitle">Контакт: <%= brief.contact_person %></p>
+    </div>
+    <div class="inline-actions">
+      <a class="secondary-btn" href="/admin/briefs">Назад</a>
+      <a class="primary-btn" href="/admin/briefs/<%= brief.id %>/edit">Редагувати</a>
+    </div>
+  </header>
+
+  <div class="card details-grid">
+    <div><strong>Email</strong><p><%= brief.email %></p></div>
+    <div><strong>Телефон</strong><p><%= brief.phone || 'Не вказано' %></p></div>
+    <div><strong>Зручний спосіб зв’язку</strong><p><%= brief.preferred_contact || 'Не вказано' %></p></div>
+    <div><strong>Тип організації</strong><p><%= brief.organization_type %></p></div>
+    <div><strong>Діяльність команди / компанії</strong><p><%= brief.company_activity %></p></div>
+    <div><strong>Опис запиту</strong><p><%= brief.project_summary %></p></div>
+    <div><strong>Проблема, яку потрібно вирішити</strong><p><%= brief.problem_statement %></p></div>
+    <div><strong>Мета проєкту</strong><p><%= brief.project_goal %></p></div>
+    <div><strong>Цільова аудиторія</strong><p><%= brief.target_audience %></p></div>
+    <div><strong>Очікувана кількість користувачів</strong><p><%= brief.expected_users %></p></div>
+    <div><strong>Критерії успіху</strong><p><%= brief.success_criteria %></p></div>
+    <div><strong>Основні модулі</strong><p><%= brief.platform_modules %></p></div>
+    <div><strong>Дані та сутності</strong><p><%= brief.content_entities %></p></div>
+    <div><strong>Доступи / ролі / кабінети</strong><p><%= brief.access_notes || 'Не вказано' %></p></div>
+    <div><strong>Потрібні функції</strong><p><%= brief.required_features %></p></div>
+    <div><strong>Ролі користувачів</strong><p><%= brief.user_roles %></p></div>
+    <div><strong>Інтеграції</strong><p><%= brief.integrations || 'Не вказано' %></p></div>
+    <div><strong>Нестандартна логіка</strong><p><%= brief.custom_logic || 'Не вказано' %></p></div>
+    <div><strong>Побажання до дизайну</strong><p><%= brief.design_preferences || 'Не вказано' %></p></div>
+    <div><strong>Референси</strong><p><%= brief.reference_examples || 'Не вказано' %></p></div>
+    <div><strong>Бренд-матеріали</strong><p><%= brief.brand_assets || 'Не вказано' %></p></div>
+    <div><strong>Мобільна версія</strong><p><%= brief.mobile_priority || 'Не вказано' %></p></div>
+    <div><strong>Дедлайн</strong><p><%= brief.deadline || 'Не вказано' %></p></div>
+    <div><strong>Бюджет</strong><p><%= brief.budget_range || 'Не вказано' %></p></div>
+    <div><strong>Технічні обмеження</strong><p><%= brief.technical_constraints || 'Не вказано' %></p></div>
+    <div><strong>Хто приймає рішення</strong><p><%= brief.decision_maker || 'Не вказано' %></p></div>
+    <div><strong>Додаткові коментарі</strong><p><%= brief.additional_notes || 'Не вказано' %></p></div>
+    <div><strong>Створено</strong><p><%= new Date(brief.created_at).toLocaleString('uk-UA') %></p></div>
+    <div><strong>Оновлено</strong><p><%= new Date(brief.updated_at).toLocaleString('uk-UA') %></p></div>
+  </div>
+</div>
+<%- include('../partials-footer') %>

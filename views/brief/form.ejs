@@ -1,0 +1,212 @@
+<%- include('../partials-head') %>
+
+<div class="container">
+  <header class="hero">
+    <div>
+      <h1>Бриф на розробку платформи Squadly</h1>
+      <p class="subtitle">
+        Заповніть форму якомога детальніше. Відповіді допоможуть зафіксувати цілі,
+        функціональні вимоги, побажання до інтерфейсу, обмеження та критерії успіху майбутнього продукту.
+      </p>
+    </div>
+    <a class="secondary-btn" href="/admin/login">Адмін-панель</a>
+  </header>
+
+  <div class="card intro-card">
+    <p>
+      Squadly — це веб-платформа для організації групових проєктів, формування команд,
+      розподілу ролей, керування задачами та відстеження спільного прогресу.
+      Цей бриф використовується для первинного збору вимог перед розробкою або доопрацюванням системи.
+    </p>
+  </div>
+
+  <% if (success) { %>
+    <div class="alert success">Бриф успішно надіслано. Дані збережено.</div>
+  <% } %>
+
+  <% if (error) { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+
+  <form class="card form-grid" method="POST" action="/submit">
+    <section>
+      <h2>1. Контактна інформація</h2>
+      <div class="grid-2">
+        <label>Ім’я та прізвище *
+          <input type="text" name="contact_person" value="<%= formData.contact_person || '' %>" required />
+        </label>
+        <label>Email *
+          <input type="email" name="email" value="<%= formData.email || '' %>" required />
+        </label>
+        <label>Телефон
+          <input type="text" name="phone" value="<%= formData.phone || '' %>" placeholder="Наприклад: +380..." />
+        </label>
+        <label>Зручний спосіб зв’язку
+          <select name="preferred_contact">
+            <option value="">Оберіть варіант</option>
+            <% ['Email','Телефон','Telegram','Viber','Будь-який'].forEach(option => { %>
+              <option value="<%= option %>" <%= formData.preferred_contact === option ? 'selected' : '' %>><%= option %></option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Інформація про замовника та проєкт</h2>
+      <div class="grid-2">
+        <label>Назва компанії / команди *
+          <input type="text" name="company_name" value="<%= formData.company_name || '' %>" required />
+        </label>
+        <label>Тип організації *
+          <select name="organization_type" required>
+            <option value="">Оберіть варіант</option>
+            <% ['Освітня установа','Стартап','Комерційна компанія','Громадська організація','Внутрішня команда','Інше'].forEach(option => { %>
+              <option value="<%= option %>" <%= formData.organization_type === option ? 'selected' : '' %>><%= option %></option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+      <label>Чим займається ваша організація або команда? *
+        <textarea name="company_activity" required><%= formData.company_activity || '' %></textarea>
+      </label>
+      <label>Коротко опишіть ідею або запит щодо Squadly *
+        <textarea name="project_summary" required><%= formData.project_summary || '' %></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>3. Цілі та очікуваний результат</h2>
+      <label>Яку проблему має вирішити платформа? *
+        <textarea name="problem_statement" required><%= formData.problem_statement || '' %></textarea>
+      </label>
+      <label>Яка основна мета проєкту? *
+        <textarea name="project_goal" required><%= formData.project_goal || '' %></textarea>
+      </label>
+      <div class="grid-2">
+        <label>Цільова аудиторія *
+          <textarea name="target_audience" required><%= formData.target_audience || '' %></textarea>
+        </label>
+        <label>Очікувана кількість користувачів *
+          <select name="expected_users" required>
+            <option value="">Оберіть варіант</option>
+            <% ['До 50','50–200','200–1000','1000+'].forEach(option => { %>
+              <option value="<%= option %>" <%= formData.expected_users === option ? 'selected' : '' %>><%= option %></option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+      <label>Який результат ви вважаєте успішним? *
+        <textarea name="success_criteria" required><%= formData.success_criteria || '' %></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>4. Структура платформи та контент</h2>
+      <label>Які основні розділи або модулі повинні бути в системі? *
+        <textarea name="platform_modules" required><%= formData.platform_modules || '' %></textarea>
+      </label>
+      <label>Які дані користувачі будуть створювати або зберігати? *
+        <textarea name="content_entities" required><%= formData.content_entities || '' %></textarea>
+      </label>
+      <label>Чи потрібні багатомовність, ролі доступу або окремі кабінети?
+        <textarea name="access_notes"><%= formData.access_notes || '' %></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>5. Функціональні вимоги</h2>
+      <p class="hint">Оберіть функції, які потрібно реалізувати в першу чергу.</p>
+      <% const selectedFeatures = (formData.required_features || '').split(',').map(item => item.trim()).filter(Boolean); %>
+      <div class="checkbox-grid">
+        <% [
+          'Реєстрація та авторизація',
+          'Створення проєктів',
+          'Створення команд',
+          'Розподіл ролей',
+          'Управління задачами',
+          'Календар / дедлайни',
+          'Відстеження прогресу',
+          'Сповіщення',
+          'Командний чат',
+          'Файлові вкладення',
+          'Аналітика та звіти',
+          'Панель адміністратора'
+        ].forEach(feature => { %>
+          <label class="checkbox-item">
+            <input type="checkbox" name="required_features" value="<%= feature %>" <%= selectedFeatures.includes(feature) ? 'checked' : '' %> />
+            <span><%= feature %></span>
+          </label>
+        <% }) %>
+      </div>
+      <label>Які ролі користувачів потрібні? *
+        <textarea name="user_roles" required><%= formData.user_roles || '' %></textarea>
+      </label>
+      <label>Які інтеграції потрібні?
+        <input type="text" name="integrations" value="<%= formData.integrations || '' %>" placeholder="Наприклад: Google Drive, Telegram, Email, Zoom" />
+      </label>
+      <label>Опишіть додаткову логіку або нестандартні сценарії
+        <textarea name="custom_logic"><%= formData.custom_logic || '' %></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h2>6. Дизайн та інтерфейс</h2>
+      <label>Яким має бути стиль інтерфейсу?
+        <textarea name="design_preferences"><%= formData.design_preferences || '' %></textarea>
+      </label>
+      <div class="grid-2">
+        <label>Чи є приклади сервісів, які вам подобаються?
+          <textarea name="reference_examples"><%= formData.reference_examples || '' %></textarea>
+        </label>
+        <label>Чи є фірмові кольори, логотип або готовий UI-kit?
+          <textarea name="brand_assets"><%= formData.brand_assets || '' %></textarea>
+        </label>
+      </div>
+      <label>Чи потрібна адаптація під мобільні пристрої?
+        <select name="mobile_priority">
+          <option value="">Оберіть варіант</option>
+          <% ['Так, обов’язково','Бажано','Не критично'].forEach(option => { %>
+            <option value="<%= option %>" <%= formData.mobile_priority === option ? 'selected' : '' %>><%= option %></option>
+          <% }) %>
+        </select>
+      </label>
+    </section>
+
+    <section>
+      <h2>7. Обмеження та організаційні питання</h2>
+      <div class="grid-2">
+        <label>Бажаний термін реалізації
+          <input type="text" name="deadline" value="<%= formData.deadline || '' %>" placeholder="Наприклад: 6–8 тижнів" />
+        </label>
+        <label>Орієнтовний бюджет
+          <select name="budget_range">
+            <option value="">Оберіть варіант</option>
+            <% ['Мінімальний','Середній','Високий','Потрібна оцінка'].forEach(option => { %>
+              <option value="<%= option %>" <%= formData.budget_range === option ? 'selected' : '' %>><%= option %></option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+      <label>Технічні обмеження або вимоги
+        <textarea name="technical_constraints"><%= formData.technical_constraints || '' %></textarea>
+      </label>
+      <label>Хто приймає фінальне рішення по проєкту?
+        <input type="text" name="decision_maker" value="<%= formData.decision_maker || '' %>" />
+      </label>
+    </section>
+
+    <section>
+      <h2>8. Додаткові коментарі</h2>
+      <label>Що ще важливо врахувати перед стартом?
+        <textarea name="additional_notes"><%= formData.additional_notes || '' %></textarea>
+      </label>
+    </section>
+
+    <div class="form-actions">
+      <button class="primary-btn" type="submit">Надіслати бриф</button>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials-footer') %>
